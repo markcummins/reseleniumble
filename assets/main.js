@@ -1,7 +1,9 @@
 $(document).ready( function(){
-    
+        
     var file1;
 	var file2; 
+    var timestamp = $.now();
+    
     var img_arr = new Array;
     var my_interval;
     
@@ -55,6 +57,7 @@ $(document).ready( function(){
             
             $('#results').fadeIn();
             console.log('Complete');
+            $('.zoom').zoom();
             
             $('.progress').hide();
             
@@ -63,8 +66,10 @@ $(document).ready( function(){
         else{            
             // PROCESS IMAGE
             wait = true;
-            var file1 = 'selenium/latest-batch/' + val;
+            var file1 = 'selenium/latest-batch/' + val + '?' + timestamp;
             var file2 = 'selenium/'+ folder_name +'/' + val;
+            //console.log(file1); console.log(file2);
+            
             resemble(file1).compareTo(file2).onComplete(onComplete);
         }
     }
@@ -83,30 +88,35 @@ $(document).ready( function(){
             var diffImage = new Image();		
             wait = false;
 
-            var image_a = "<img class='thumbnail small' src='"+ data.one +"'></img>";
-            var image_b = "<img class='thumbnail small' src='"+ data.two +"'></img>";
-            var image_c = "<img class='thumbnail' src='"+ data.getImageDataUrl() +"'></img>";
+            var image_a = "<div class='span3'><div class='zoom thumbnail'><img src='"+ data.one +"'></img></div></div>";
+            var image_b = "<div class='span3'><div class='zoom thumbnail'><img src='"+ data.two +"'></img></div></div>";
+            var image_c = "<div class='span6'><div class='zoom thumbnail'><img src='"+ data.getImageDataUrl() +"'></img></div></div>";
 
                 if(data.misMatchPercentage == 0){
-                    $('#same').append('<div class="row"><div class="span6">'+ image_a + image_b +'</div><div class="span6">'+ image_c +'</div></div><br/>');
+                    $('#same').append('<div class="row">'+ image_a + image_b + image_c +'</div><br/>');
                     $('#same').show();
                     
                     same++;
+                    $('#nav .same-anchor').show();
                     $('#count-same span').html(same);
                 }
                 else{
-                    $('#diff').append('<div class="row"><div class="span12"><h4>Diff: '+ data.misMatchPercentage +'</h4></div></div>');
-                    $('#diff').append('<div class="row"><div class="span6">'+ image_a + image_b +'</div><div class="span6">'+ image_c +'</div></div><br/>');
+                    $('#diff').append('<div class="row"><div class="span12"><span class="label label-success">Diff: '+ data.misMatchPercentage +'</span></div></div><br/>');
+                    $('#diff').append('<div class="row">'+ image_a + image_b + image_c +'</div><br/>');
                     $('#diff').show();
                     
                     diff++;
+                    $('#nav .diff-anchor').show();
                     $('#count-diff span').html(diff);
                 }
             }
         catch(err) {
+            console.log(data);
+            console.log(err);
+            
             found_errors++;
-            $('#info p.processing-errors span').html(found_errors);
-            $('#info p.processing-errors').fadeIn();
+            $('#info li.processing-errors span').html(found_errors);
+            $('#info li.processing-errors').fadeIn();
         }
 	}
 });

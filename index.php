@@ -8,11 +8,15 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="libs/twitter-bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="demoassets/resemble.css?v1">
+    <link rel="stylesheet" href="assets/resemble.css?v1">
 </head>
 <body>
     <div class="container">
         <section role="main">
+           
+           
+            <div id="x"></div>
+            
             <?php if(!empty($_GET) && $_GET['folder'] > 1): ?>
                 <input id="folder" value="<?= $_GET['folder']; ?>" type="hidden"/>
             <?php endif; ?>
@@ -48,22 +52,22 @@
             
             <div class="row">
                 <div class="span12">
-                
-                <div id="errors" class="alert alert-error">
-                    
-                </div>
-                
                 <div id="info" class="alert alert-info">
-                    <strong>Processing:</strong><span id="count_done">0</span>/<span id="count_todo">0</span>
-                    
-                    <p id="count-same"><span>0</span> similar images found</p>
-                    <p id="count-diff"><span>0</span> images with differences found</p>
-                    <p class="processing-errors"><span>0</span> processing errors found</p>
+                    <ul>
+                        <li><strong>Processing:</strong><span id="count_done">0</span>/<span id="count_todo">0</span></li>
+                        <li id="count-same"><span>0</span> similar images found</li>
+                        <li id="count-diff"><span>0</span> images with differences found</li>
+                        <li class="processing-errors"><span>0</span> processing errors found</li>
+                    </ul>
                 </div>
                 </div>
             </div>
             
             <div id="results">
+                <div id="nav">
+                    <span class="diff-anchor"><a href="#diff">&gt; Diff</a></span>
+                    <span class="same-anchor"><a href="#same">&gt; Same</a></span>
+                </div>
                 <div id="diff">
                     <div class="page-header"><h1>Diff</h1>
                     <!-- JQUERY APPEND HERE -->
@@ -79,8 +83,9 @@
        </section>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="assets/jquery.zoom.min.js"></script>
     <script src="resemble.js"></script>
-    <script src="demoassets/main.js"></script>
+    <script src="assets/main.js"></script>
 </body>
 
 </html>
